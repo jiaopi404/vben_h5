@@ -9,7 +9,7 @@ import { configHtmlPlugin } from './html';
 import { configPwaConfig } from './pwa';
 import { configMockPlugin } from './mock';
 import { configCompressPlugin } from './compress';
-import { configStyleImportPlugin } from './styleImport';
+import { configStyleImportPlugin, configStyleImportPluginForVant } from './styleImport';
 import { configVisualizerConfig } from './visualizer';
 import { configThemePlugin } from './theme';
 import { configImageminPlugin } from './imagemin';
@@ -57,6 +57,9 @@ export function createVitePlugins(viteEnv: ViteEnv, isBuild: boolean) {
 
   // vite-plugin-style-import
   vitePlugins.push(configStyleImportPlugin(isBuild));
+
+  // vite-plugin-stype-import
+  vitePlugins.push(configStyleImportPluginForVant(isBuild));
 
   // rollup-plugin-visualizer
   vitePlugins.push(configVisualizerConfig());

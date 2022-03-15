@@ -90,11 +90,23 @@ export const useUserStore = defineStore({
     ): Promise<GetUserInfoModel | null> {
       try {
         const { goHome = true, mode, ...loginParams } = params;
-        const data = await loginApi(loginParams, mode);
-        const { token } = data;
+        const res = await loginApi(loginParams, mode);
+        const {
+          data: { data, msg },
+        } = res;
 
+        if (!data) {
+          const { createMessage } = useMessage();
+          createMessage.error(msg);
+          return null;
+        }
+        const { sessionId } = data; // sessionId
         // save token
-        this.setToken(token);
+        this.setToken(sessionId);
+        // save userInfo
+        this.setUserInfo(data);
+        // TODO: 修正 role
+        this.setRoleList([RoleEnum.SUPER]);
         return this.afterLoginAction(goHome);
       } catch (error) {
         return Promise.reject(error);
@@ -103,7 +115,7 @@ export const useUserStore = defineStore({
     async afterLoginAction(goHome?: boolean): Promise<GetUserInfoModel | null> {
       if (!this.getToken) return null;
       // get user info
-      const userInfo = await this.getUserInfoAction();
+      // const userInfo = await this.getUserInfoAction();
 
       const sessionTimeout = this.sessionTimeout;
       if (sessionTimeout) {
@@ -118,9 +130,9 @@ export const useUserStore = defineStore({
           router.addRoute(PAGE_NOT_FOUND_ROUTE as unknown as RouteRecordRaw);
           permissionStore.setDynamicAddedRoute(true);
         }
-        goHome && (await router.replace(userInfo?.homePath || PageEnum.BASE_HOME));
+        goHome && (await router.replace(PageEnum.BASE_HOME));
       }
-      return userInfo;
+      return this.userInfo;
     },
     async getUserInfoAction(): Promise<UserInfo | null> {
       if (!this.getToken) return null;

@@ -100,6 +100,7 @@
   import { useUserStore } from '/@/store/modules/user';
   import { LoginStateEnum, useLoginState, useFormRules, useFormValid } from './useLogin';
   import { useDesign } from '/@/hooks/web/useDesign';
+import { encryptByMd5 } from '/@/utils/cipher';
   //import { onKeyStroke } from '@vueuse/core';
 
   const ACol = Col;
@@ -134,15 +135,16 @@
     if (!data) return;
     try {
       loading.value = true;
+      const _md5Password = encryptByMd5(data.password);
       const userInfo = await userStore.login({
-        password: data.password,
+        password: _md5Password,
         username: data.account,
         mode: 'none', //不要默认的错误提示
       });
       if (userInfo) {
         notification.success({
           message: t('sys.login.loginSuccessTitle'),
-          description: `${t('sys.login.loginSuccessDesc')}: ${userInfo.realName}`,
+          description: `${t('sys.login.loginSuccessDesc')}: ${userInfo.perName}`,
           duration: 3,
         });
       }

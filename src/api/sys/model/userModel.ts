@@ -2,6 +2,7 @@
  * @description: Login interface parameters
  */
 export interface LoginParams {
+  [key: string]: any;
   username: string;
   password: string;
 }
@@ -35,4 +36,16 @@ export interface GetUserInfoModel {
   avatar: string;
   // 介绍
   desc?: string;
+}
+
+/**
+ * @description: Get user information return value
+ */
+export interface UserInfo {
+  account: string; // account
+  perName: Nullable<string>; // perName
+  name: Nullable<string>;
+  id: number;
+  sessionId: string;
+  [key: string]: any;
 }

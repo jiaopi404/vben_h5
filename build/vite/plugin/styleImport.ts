@@ -2,7 +2,18 @@
  *  Introduces component library styles on demand.
  * https://github.com/anncwb/vite-plugin-style-import
  */
-import styleImport from 'vite-plugin-style-import';
+import styleImport, { VantResolve } from 'vite-plugin-style-import';
+
+export function configStyleImportPluginForVant(isBuild: boolean) {
+  if (!isBuild) {
+    return [];
+  }
+  const styleImportPlugin = styleImport({
+    resolves: [VantResolve()],
+  });
+
+  return styleImportPlugin;
+}
 
 export function configStyleImportPlugin(isBuild: boolean) {
   if (!isBuild) {

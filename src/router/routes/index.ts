@@ -36,9 +36,19 @@ export const LoginRoute: AppRouteRecordRaw = {
   },
 };
 
+export const WelcomeRoute: AppRouteRecordRaw = {
+  path: '/welcome',
+  name: 'Welcome',
+  component: () => import('/@/views/welcome/index.vue'),
+  meta: {
+    title: '欢迎',
+  },
+};
+
 // Basic routing without permission
 export const basicRoutes = [
   LoginRoute,
+  WelcomeRoute,
   RootRoute,
   ...mainOutRoutes,
   REDIRECT_ROUTE,

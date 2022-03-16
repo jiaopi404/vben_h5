@@ -2,7 +2,8 @@ import type { AppRouteRecordRaw } from '/@/router/types';
 import { t } from '/@/hooks/web/useI18n';
 import {
   REDIRECT_NAME,
-  LAYOUT,
+  // LAYOUT,
+  MOBILE_LAYOUT,
   EXCEPTION_COMPONENT,
   PAGE_NOT_FOUND_NAME,
 } from '/@/router/constant';
@@ -11,7 +12,7 @@ import {
 export const PAGE_NOT_FOUND_ROUTE: AppRouteRecordRaw = {
   path: '/:path(.*)*',
   name: PAGE_NOT_FOUND_NAME,
-  component: LAYOUT,
+  component: MOBILE_LAYOUT,
   meta: {
     title: 'ErrorPage',
     hideBreadcrumb: true,
@@ -33,7 +34,7 @@ export const PAGE_NOT_FOUND_ROUTE: AppRouteRecordRaw = {
 
 export const REDIRECT_ROUTE: AppRouteRecordRaw = {
   path: '/redirect',
-  component: LAYOUT,
+  component: MOBILE_LAYOUT,
   name: 'RedirectTo',
   meta: {
     title: REDIRECT_NAME,
@@ -56,7 +57,7 @@ export const REDIRECT_ROUTE: AppRouteRecordRaw = {
 export const ERROR_LOG_ROUTE: AppRouteRecordRaw = {
   path: '/error-log',
   name: 'ErrorLog',
-  component: LAYOUT,
+  component: MOBILE_LAYOUT,
   redirect: '/error-log/list',
   meta: {
     title: 'ErrorLog',

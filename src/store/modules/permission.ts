@@ -1,3 +1,4 @@
+import { PermissionModeEnum } from './../../enums/appEnum';
 import type { AppRouteRecordRaw, Menu } from '/@/router/types';
 
 import { defineStore } from 'pinia';
@@ -147,6 +148,8 @@ export const usePermissionStore = defineStore({
         }
         return;
       };
+
+      console.log('permission mode is: ', permissionMode);
 
       switch (permissionMode) {
         case PermissionModeEnum.ROLE:

@@ -604,3 +604,37 @@ export async function readImgSize(file): Promise<{ width: number; height: number
 export const getPathByPathEnum = (...paths): string => {
   return '/' + paths.join('/');
 };
+
+/*
+ * 用来获取url中的所有参数
+ * let url = 'http://192.168.1.122:9020/?appId=wxf4b72971eacba4d6&loginScene=1#/'
+ */
+export const getQueryParams = <T>(url = document.location.toString()) => {
+  // let url =
+  // 如果url中有特殊字符则需要进行一下解码
+  url = decodeURI(url);
+  const arr1 = url.split('?');
+  const obj = {} as T;
+  if (arr1.length > 1) {
+    const index = arr1[1].indexOf('#');
+    arr1[1] = index == -1 ? arr1[1] : arr1[1].slice(0, index);
+    const arr2 = arr1[1].split('&');
+    for (let i = 0; i < arr2.length; i++) {
+      const curArr: string[] = arr2[i].split('=');
+      obj[curArr[0]] = decodeURIComponent(curArr[1]);
+    }
+  }
+  return obj;
+};
+
+/**
+ * 判断是安卓还是iOS
+ */
+export const phoneModel = () => {
+  const u = navigator.userAgent;
+  const app = navigator.appVersion;
+  const isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //android终端或者uc浏览器
+  const isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+  if (isAndroid) return 'android';
+  if (isiOS) return 'ios';
+};

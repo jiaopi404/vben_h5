@@ -34,47 +34,47 @@ export function createPermissionGuard(router: Router) {
     const token = userStore.getToken;
 
     // Whitelist can be directly entered
-    // if (whitePathList.includes(to.path as PageEnum)) {
-    //   if (to.path === LOGIN_PATH && token) {
-    //     const isSessionTimeout = userStore.getSessionTimeout;
-    //     try {
-    //       await userStore.afterLoginAction();
-    //       console.log('to 3: 执行完 afterLoginAction', userStore.getSessionTimeout);
-    //       if (!isSessionTimeout) {
-    //         console.log('to 4: !isSessionTimeout', to.query?.redirect);
-    //         next((to.query?.redirect as string) || '/');
-    //         return;
-    //       }
-    //     } catch {}
-    //   }
-    //   console.log('to 2 white path list: ', whitePathList);
-    //   next();
-    //   return;
-    // }
+    if (whitePathList.includes(to.path as PageEnum)) {
+      if (to.path === LOGIN_PATH && token) {
+        const isSessionTimeout = userStore.getSessionTimeout;
+        try {
+          await userStore.afterLoginAction();
+          console.log('to 3: 执行完 afterLoginAction', userStore.getSessionTimeout);
+          if (!isSessionTimeout) {
+            console.log('to 4: !isSessionTimeout', to.query?.redirect);
+            next((to.query?.redirect as string) || '/');
+            return;
+          }
+        } catch {}
+      }
+      console.log('to 2 white path list: ', whitePathList);
+      next();
+      return;
+    }
 
     // token does not exist
-    // if (!token) {
-    //   // You can access without permission. You need to set the routing meta.ignoreAuth to true
-    //   if (to.meta.ignoreAuth) {
-    //     next();
-    //     return;
-    //   }
+    if (!token) {
+      // You can access without permission. You need to set the routing meta.ignoreAuth to true
+      if (to.meta.ignoreAuth) {
+        next();
+        return;
+      }
 
-    //   // redirect login page
-    //   const redirectData: { path: string; replace: boolean; query?: Recordable<string> } = {
-    //     path: LOGIN_PATH,
-    //     replace: true,
-    //   };
-    //   if (to.path) {
-    //     redirectData.query = {
-    //       ...redirectData.query,
-    //       redirect: to.path,
-    //     };
-    //   }
-    //   console.log('to 5: 没有token，redirect', redirectData);
-    //   next(redirectData);
-    //   return;
-    // }
+      // redirect login page
+      const redirectData: { path: string; replace: boolean; query?: Recordable<string> } = {
+        path: LOGIN_PATH,
+        replace: true,
+      };
+      if (to.path) {
+        redirectData.query = {
+          ...redirectData.query,
+          redirect: to.path,
+        };
+      }
+      console.log('to 5: 没有token，redirect', redirectData);
+      next(redirectData);
+      return;
+    }
 
     // Jump to the 404 page after processing the login
     if (

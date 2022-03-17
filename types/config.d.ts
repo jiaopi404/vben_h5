@@ -146,6 +146,8 @@ export interface GlobConfig {
   urlPrefix?: string;
   // Project abbreviation
   shortName: string;
+  // appid
+  appId: string;
 }
 export interface GlobEnvConfig {
   // Site title
@@ -154,6 +156,8 @@ export interface GlobEnvConfig {
   VITE_GLOB_API_URL: string;
   // Service interface url prefix
   VITE_GLOB_API_URL_PREFIX?: string;
+  // appId
+  VITE_APPID: string;
   // Project abbreviation
   VITE_GLOB_APP_SHORT_NAME: string;
   // Upload url

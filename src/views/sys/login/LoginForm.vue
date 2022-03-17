@@ -100,7 +100,7 @@
   import { useUserStore } from '/@/store/modules/user';
   import { LoginStateEnum, useLoginState, useFormRules, useFormValid } from './useLogin';
   import { useDesign } from '/@/hooks/web/useDesign';
-import { encryptByMd5 } from '/@/utils/cipher';
+  import { encryptByMd5 } from '/@/utils/cipher';
   //import { onKeyStroke } from '@vueuse/core';
 
   const ACol = Col;
@@ -120,8 +120,8 @@ import { encryptByMd5 } from '/@/utils/cipher';
   const rememberMe = ref(false);
 
   const formData = reactive({
-    account: 'vben',
-    password: '123456',
+    account: '100001',
+    password: 'ysjx012345',
   });
 
   const { validForm } = useFormValid(formRef);

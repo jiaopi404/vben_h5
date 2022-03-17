@@ -3,6 +3,8 @@ export const TOKEN_KEY = 'TOKEN__';
 
 export const LOCALE_KEY = 'LOCALE__';
 
+export const LINK_KEY = 'LINK__';
+
 // user info key
 export const USER_INFO_KEY = 'USER__INFO__';
 
@@ -24,6 +26,10 @@ export const APP_LOCAL_CACHE_KEY = 'COMMON__LOCAL__KEY__';
 
 // base global session key
 export const APP_SESSION_CACHE_KEY = 'COMMON__SESSION__KEY__';
+
+export const CONFIG = 'CONFIG';
+
+export const BUSINESS_STATE_KEY = 'BUSINESS_STATE_KEY';
 
 export enum CacheTypeEnum {
   SESSION,

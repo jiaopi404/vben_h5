@@ -7,12 +7,18 @@
       </h1>
       <h2 class="demo-home__desc">A vue h5 template with Vant UI</h2>
     </div>
+    <div class="ml-5">
+      <Button color="linear-gradient(to right, #ff6034, #ee0a24)" size="small" @click="logout">
+        登&nbsp;&nbsp;出
+      </Button>
+    </div>
     <Cell icon="success" v-for="item in list" :key="item" :title="item" />
   </div>
 </template>
 <script lang="ts" setup>
   import { useDesign } from '/@/hooks/web/useDesign';
-  import { Cell } from 'vant';
+  import { Cell, Button } from 'vant';
+  import { useUserStore } from '/@/store/modules/user';
 
   const list = [
     'create-vue',
@@ -40,6 +46,11 @@
   ];
 
   const { prefixCls } = useDesign('page-home');
+  const userStore = useUserStore();
+
+  const logout = () => {
+    userStore.logout(true);
+  };
 </script>
 <style lang="less" scoped>
   @prefix-cls: ~'@{namespace}-page-home';

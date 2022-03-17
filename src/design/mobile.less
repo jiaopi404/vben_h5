@@ -1,0 +1,38 @@
+@safe-bottom: constant(safe-area-inset-bottom);
+@safe-bottom: env(safe-area-inset-bottom);
+
+.fixIphonex {
+  padding-bottom: @safe-bottom !important;
+
+  &::after {
+    content: '';
+    position: fixed;
+    bottom: 0 !important;
+    left: 0;
+    height: calc(@safe-bottom + 1px);
+    width: 100%;
+    background: #ffffff;
+  }
+}
+
+/* 适配iphonex */
+
+@supports (bottom: env(safe-area-inset-bottom)) {
+  .app-container {
+    padding-bottom: calc(env(safe-area-inset-bottom) + 50px); // 这里是重点
+  }
+
+  .bottom-button-box {
+    bottom: env(safe-area-inset-bottom); // 这里是重点
+
+    &::after {
+      content: '';
+      height: env(safe-area-inset-bottom); // 这里是重点
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background-color: #fff;
+    }
+  }
+}

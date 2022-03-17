@@ -48,21 +48,28 @@ const transform: AxiosTransform = {
       throw new Error(t('sys.api.apiRequestFailed'));
     }
     //  这里 code，result，message为 后台统一的字段，需要在 types.ts内修改为项目自己的接口返回格式
-    const { code, result, message } = data;
+    const { code, data: _trueData, message } = data;
 
     // 这里逻辑可以根据项目进行修改
     const hasSuccess = data && Reflect.has(data, 'code') && code === ResultEnum.SUCCESS;
     if (hasSuccess) {
-      return result;
+      return _trueData;
     }
 
     // 在此处根据自己项目的实际情况对不同的code执行不同的操作
     // 如果不希望中断当前请求，请return数据，否则直接抛出异常即可
     let timeoutMsg = '';
+    const userStore = useUserStoreWithOut();
     switch (code) {
       case ResultEnum.TIMEOUT:
         timeoutMsg = t('sys.api.timeoutMessage');
-        const userStore = useUserStoreWithOut();
+        // const userStore = useUserStoreWithOut();
+        userStore.setToken(undefined);
+        userStore.logout(true);
+        break;
+      case 418:
+        timeoutMsg = t('sys.api.timeoutMessage');
+        // const userStore = useUserStoreWithOut();
         userStore.setToken(undefined);
         userStore.logout(true);
         break;
@@ -109,9 +116,12 @@ const transform: AxiosTransform = {
     } else {
       if (!isString(params)) {
         formatDate && formatRequestDate(params);
-        if (Reflect.has(config, 'data') && config.data && Object.keys(config.data).length > 0) {
+        if (
+          Reflect.has(config, 'data') &&
+          (typeof config.data === 'string' || typeof config.data === 'number')
+        ) {
           config.data = data;
-          config.params = params;
+          config.params = undefined;
         } else {
           // 非GET请求如果没有提供data，则将params视为data
           config.data = params;
@@ -200,7 +210,7 @@ function createAxios(opt?: Partial<CreateAxiosOptions>) {
         // authentication schemes，e.g: Bearer
         // authenticationScheme: 'Bearer',
         authenticationScheme: '',
-        timeout: 10 * 1000,
+        timeout: 30 * 1000,
         // 基础接口地址
         // baseURL: globSetting.apiUrl,
 

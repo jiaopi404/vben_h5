@@ -7,17 +7,28 @@
       </h1>
       <h2 class="demo-home__desc">A vue h5 template with Vant UI</h2>
     </div>
-    <div class="ml-5">
-      <Button color="linear-gradient(to right, #ff6034, #ee0a24)" size="small" @click="logout">
-        登&nbsp;&nbsp;出
-      </Button>
+    <div class="flex justify-center items-center shadow-lg m-5">
+      <Button plain size="small" @click="logout"> 登&nbsp;&nbsp;出 </Button>
+    </div>
+    <div class="test-rpx">
+      <div class="left child">宽度 50</div>
+      <div class="right child">宽度 yeshi 50</div>
+    </div>
+    <div>
+      <Card
+        num="2"
+        price="2.00"
+        desc="描述信息"
+        title="商品标题"
+        thumb="https://img.yzcdn.cn/vant/ipad.jpeg"
+      />
     </div>
     <Cell icon="success" v-for="item in list" :key="item" :title="item" />
   </div>
 </template>
 <script lang="ts" setup>
   import { useDesign } from '/@/hooks/web/useDesign';
-  import { Cell, Button } from 'vant';
+  import { Cell, Button, Card } from 'vant';
   import { useUserStore } from '/@/store/modules/user';
 
   const list = [
@@ -80,6 +91,20 @@
         // margin: 0 0 10px;
         color: rgba(69, 90, 100, 0.6);
         font-size: 14px;
+      }
+    }
+
+    .test-rpx {
+      .child {
+        height: 50px;
+      }
+      .left {
+        width: 200rpx;
+        background-color: red;
+      }
+      .right {
+        width: 200px;
+        background-color: blue;
       }
     }
   }

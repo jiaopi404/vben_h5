@@ -23,6 +23,10 @@ interface UserState {
   roleList: RoleEnum[];
   sessionTimeout?: boolean;
   lastUpdateTime: number;
+  isWxAuth: boolean; // 是否进行了微信授权
+  wxAuthCode?: string; // 微信授权码
+  wxAccessToken?: string; // 微信 access_token
+  wxRefreshToken?: string; // 微信 refresh_token
 }
 
 export const useUserStore = defineStore({
@@ -38,6 +42,11 @@ export const useUserStore = defineStore({
     sessionTimeout: false,
     // Last fetch time
     lastUpdateTime: 0,
+    // 微信相关
+    isWxAuth: false,
+    wxAuthCode: undefined,
+    wxAccessToken: undefined,
+    wxRefreshToken: undefined,
   }),
   getters: {
     getUserInfo(): UserInfo {
@@ -54,6 +63,18 @@ export const useUserStore = defineStore({
     },
     getLastUpdateTime(): number {
       return this.lastUpdateTime;
+    },
+    getIsWxAuth(): boolean {
+      return this.isWxAuth;
+    },
+    getWxAuthCode(): string {
+      return this.wxAuthCode || '';
+    },
+    getWxAccessToken(): string {
+      return this.wxAccessToken || '';
+    },
+    getWxRefreshToken(): string {
+      return this.wxRefreshToken || '';
     },
   },
   actions: {
@@ -179,6 +200,19 @@ export const useUserStore = defineStore({
           await this.logout(true);
         },
       });
+    },
+    // 微信相关 action
+    setIsWxAuth(isWxAuth: boolean) {
+      this.isWxAuth = isWxAuth;
+    },
+    setWxAuthCode(wxAuthCode: string) {
+      this.wxAuthCode = wxAuthCode || '';
+    },
+    setWxAccessToken(wxAccessToken: string) {
+      this.wxAccessToken = wxAccessToken || '';
+    },
+    setWxRefreshToken(wxRefreshToken: string) {
+      this.wxRefreshToken = wxRefreshToken || '';
     },
   },
 });

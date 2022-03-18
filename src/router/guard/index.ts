@@ -12,6 +12,7 @@ import { createStateGuard } from './stateGuard';
 import nProgress from 'nprogress';
 import projectSetting from '/@/settings/projectSetting';
 import { createParamMenuGuard } from './paramMenuGuard';
+import { createMobileGuard } from './mobileGuard';
 
 // Don't change the order of creation
 export function setupRouterGuard(router: Router) {
@@ -24,6 +25,8 @@ export function setupRouterGuard(router: Router) {
   createPermissionGuard(router);
   createParamMenuGuard(router); // must after createPermissionGuard (menu has been built.)
   createStateGuard(router);
+  // last
+  createMobileGuard(router);
 }
 
 /**

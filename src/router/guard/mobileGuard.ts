@@ -21,6 +21,7 @@ export function createMobileGuard(router: Router) {
     const { code } = getQueryParams<QueryParamsI>();
     // 微信浏览器内微信授权登陆
     if (isWeChat()) {
+      console.log('是不是微信服务器');
       // if (code) {
       //   authStore.setIsAuth(true);
       //   authStore.setCode(code);
